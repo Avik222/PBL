@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from tabulate import tabulate
 
 # CONFIG
-GEMINI_API_KEY = "AIzaSyAyDBAzE73RUbhOSU3LxNGoKQknpP8GVH4" # (This looks like a sample key)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") # (This looks like a sample key)
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key={GEMINI_API_KEY}"
 MUSIC_DATA_FILE = "dataset.csv"  # Assumes dataset.csv is in the same folder
 
