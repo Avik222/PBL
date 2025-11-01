@@ -1,0 +1,17 @@
+# Python Virtual Environment
+# This is the most important line!
+env2/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Secret files
+# Your code mentions this file for API tokens
+discogs_token.json
+
+# Any local environment variable files
+*.env
+
+# VS Code editor settings
+.vscode/
