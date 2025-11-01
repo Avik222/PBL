@@ -1,68 +1,99 @@
-# 🎬 Vibe-Based Movie & Music Suggester
+# 🤖 AI-Integrated Media Recommender
 
-This is a Python-based command-line tool that provides movie and music recommendations based on a user's described vibe or mood.
+This is a Python-based command-line tool that provides movie and music recommendations based on a user's described vibe or mood. It uses the Google Gemini API to understand natural language input, scrapes IMDb for movie suggestions, and searches a local song dataset for music tracks.
 
-It uses the Gemini API to understand natural language input, scrapes IMDb for movie suggestions, and searches a local song dataset for music tracks.
-
-## ✨ Features
-
-* **Vibe Analysis:** Uses the Google Gemini API to translate a user's "vibe" (e.g., "I'm sad and want to think about life") into a list of formal genres (e.g., `["Drama", "Biography"]`).
-* **Movie Recommendations:** Scrapes IMDb in real-time for currently popular movies that match the suggested genres.
-* **Music Recommendations:** Searches a large local `dataset.csv` to find songs that match the suggested genres.
-* **Manual Mode:** Allows users to bypass the AI and manually input one or more genres.
-* **Combined Output:** Can provide movies, music, or both in one query.
+This project also integrates key academic concepts from **Object-Oriented Programming**, **Operating Systems**, and **Data Structures** as part of a university project.
 
 ---
 
-## 🚀 How It Works
+## 🌟 Core Features
 
-1.  The user is prompted to describe their vibe or choose 'manual' mode.
-2.  **AI Mode:** The text is sent to the **Gemini API**, which returns a JSON array of genres (e.g., `["Action", "Thriller"]`).
-3.  **For Movies:** The script scrapes `imdb.com` for the top movies listed under the "Action" and "Thriller" genres.
-4.  **For Music:** The script maps the genres (e.g., "Action" -> "rock") and searches the `dataset.csv` for 10 random songs with that genre.
-5.  The results are formatted and printed to the terminal.
+* 🎭 **AI Vibe Analysis:** Uses the Google Gemini API to translate a user's "vibe" (e.g., "I'm sad and want to think about life") into a list of formal genres (e.g., `["Drama", "Biography"]`).
+* 🎬 **Movie Recommendations:** Scrapes IMDb in real time for currently popular movies that match the suggested genres.
+* 🎧 **Music Recommendations:** Searches a large local `dataset.csv` to find songs that match the suggested genres.
+* 💻 **Manual Mode:** Allows users to bypass the AI and manually input one or more genres.
 
 ---
 
-## 🔧 Setup & Installation
+## 🧠 Academic Concepts Demonstrated
+
+This script was built to demonstrate several key computer science concepts:
+
+### 🧩 Object-Oriented Programming (OOP)
+* **Inheritance:** Uses a base `MediaRecommender` class, with `MovieRecommender` and `MusicRecommender` as child classes that inherit from it.  
+* **Polymorphism:** Both child classes override the `get_recommendations` method with their own specific logic.  
+* **Encapsulation:** The `VibeRecommenderApp` class bundles all application logic, and the `MusicRecommender` holds the music dataframe internally.  
+
+### ⚙️ Operating Systems (OS) Simulation
+* **CPU Scheduling:** A `SimpleFCFSScheduler` class simulates a First-Come, First-Served (FCFS) scheduler. Recommendation "jobs" (for movies or music) are added to a task queue and executed in the order they were received.  
+
+### 🧮 Data Structures (DS)
+* **Graph:** A genre relationship graph (implemented as a dictionary) is used to find and suggest related genres. When you select “Action,” the graph suggests “Thriller” or “Adventure.”  
+
+---
+
+## 🛠️ Setup & Installation
 
 Follow these steps to get the project running on your local machine.
 
 ### 1. Prerequisites
-
-* Python 3.7+
-* The `git` command-line tool
+* Python 3.7+  
+* The `git` command-line tool  
 
 ### 2. Clone the Repository
-
-Open your terminal and run the following command to clone the project:
-git clone [https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git](https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git)
+```bash
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git
 cd YOUR-REPOSITORY-NAME
+```
 
 ### 3. Set Up Virtual Environment
 It's highly recommended to use a virtual environment.
 
-		# Create the environment
-		python -m venv env2
+# Create the environment
+ python -m venv env
 
-		# Activate the environment
-		# On macOS/Linux:
-		source env2/bin/activate
-		# On Windows:
-		.\env2\Scripts\activate
+# Activate the environment
+# On macOS/Linux:
+source env/bin/activate
+# On Windows:
+.\env\Scripts\activate
+
 
 ### 4. Install Dependencies
-Install all the required Python packages from the requirements.txt file.
-		pip install -r requirements.txt
+
+pip install -r requirements.txt
+
 
 ### 5. Set Up Your API Key
-This project requires a Google Gemini API Key.
 
-Get your key from Google AI Studio.
+This project requires a Google Gemini API Key. Get your key from **Google AI Studio**.
+
+Set your API key as an environment variable before running the script:
+
+**On macOS/Linux:**
+ bash
+ export GEMINI_API_KEY="YOUR_API_KEY_HERE"
+
+
+**On Windows (Command Prompt):**
+
+set GEMINI_API_KEY="YOUR_API_KEY_HERE"
+
+
+**On Windows (PowerShell):**
+
+$env:GEMINI_API_KEY="YOUR_API_KEY_HERE"
+
+
+> 💡 Note: You must do this every time you open a new terminal session, or set it permanently in your system's environment variables.
 
 ### 6. Add the Music Dataset
-This script requires a CSV file named dataset.csv to be in the same folder as pj.py.
+Place a CSV file named `dataset.csv` in the same directory as `pj.py`.
 
 ### 7. How to Run
-Once your setup is complete (environment activated, API key set, dataset.csv in place), run the script from your terminal:
+Once setup is complete (environment activated, API key set, `dataset.csv` in place), run:
+
 python pj.py
+
+---
+✨ **Enjoy generating vibe-based media recommendations using AI!**
