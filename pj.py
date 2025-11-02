@@ -9,7 +9,7 @@ import time  # Added for simulation
 # =============================================================================
 # CONFIG & CONSTANTS
 # =============================================================================
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") # (This looks like a sample key)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") 
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key={GEMINI_API_KEY}"
 MUSIC_DATA_FILE = "dataset.csv"  # Assumes dataset.csv is in the same folder
 
@@ -49,7 +49,7 @@ class MediaRecommender:
     This demonstrates Abstraction and is the base for Inheritance.
     """
     def __init__(self, name):
-        self.name = name # Used by the OS Scheduler
+        self.name = name # Used by OS Scheduler
 
     def get_recommendations(self, genres):
         """This method must be overridden by child classes."""
@@ -380,4 +380,4 @@ class VibeRecommenderApp:
 
 if __name__ == "__main__":
     app = VibeRecommenderApp()
-    app.run()
+    app.run()   
