@@ -4,14 +4,14 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from tabulate import tabulate
-import time  # Added for simulation
+import time  
 
-# =============================================================================
-# CONFIG & CONSTANTS
-# =============================================================================
+
+
+
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") 
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key={GEMINI_API_KEY}"
-MUSIC_DATA_FILE = "dataset.csv"  # Assumes dataset.csv is in the same folder
+MUSIC_DATA_FILE = "dataset.csv"  
 
 GENRE_LIST = [
     "Action", "Comedy", "Drama", "Horror", "Crime", "Romance", "Thriller",
@@ -37,9 +37,9 @@ SYSTEM_PROMPT = (
     "Return result as a JSON array of strings."
 )
 
-# =============================================================================
-# [OOP] OBJECT-ORIENTED PROGRAMMING (BCS306)
-# =============================================================================
+
+
+
 
 class MediaRecommender:
     """
@@ -49,7 +49,7 @@ class MediaRecommender:
     This demonstrates Abstraction and is the base for Inheritance.
     """
     def __init__(self, name):
-        self.name = name # Used by OS Scheduler
+        self.name = name 
 
     def get_recommendations(self, genres):
         """This method must be overridden by child classes."""
@@ -96,7 +96,7 @@ class MovieRecommender(MediaRecommender):
             except Exception as e:
                 print(f"[ERROR] IMDb {genre}: {e}")
                 
-        return all_movies[:10] # Return a max of 10 movies total
+        return all_movies[:10] 
 
 class MusicRecommender(MediaRecommender):
     """
@@ -105,7 +105,7 @@ class MusicRecommender(MediaRecommender):
     """
     def __init__(self, dataframe):
         super().__init__("Music Recommendation Task")
-        self.dataframe = dataframe # Encapsulation: data is held inside the object
+        self.dataframe = dataframe 
 
     def get_recommendations(self, emotion_genres):
         """
@@ -142,9 +142,9 @@ class MusicRecommender(MediaRecommender):
             return [("Error", str(e), "N/A")]
 
 
-# =============================================================================
-# [OS] OPERATING SYSTEMS (BCS303)
-# =============================================================================
+
+
+
 
 class SimpleFCFSScheduler:
     """
@@ -153,7 +153,7 @@ class SimpleFCFSScheduler:
     Tasks are added to the queue and processed in the order they were received.
     """
     def __init__(self):
-        # A list is used as a Queue (FIFO)
+        
         self.task_queue = []
 
     def add_task(self, task_object, genres):
@@ -177,14 +177,14 @@ class SimpleFCFSScheduler:
         print(f"   Processing {len(self.task_queue)} job(s) in FCFS order...")
         
         while self.task_queue:
-            # FCFS: Remove from the front of the queue
+            
             current_job = self.task_queue.pop(0) 
             task = current_job['task']
             
             print(f"\n[OS] > Executing job: '{task.name}'...")
-            time.sleep(0.5) # Simulate processing time
+            time.sleep(0.5) 
             
-            # This is where the actual work (get_recommendations) happens
+            
             results = task.get_recommendations(current_job['genres'])
             
             print(f"[OS] > Job '{task.name}' FINISHED.")
@@ -194,9 +194,9 @@ class SimpleFCFSScheduler:
         print("─" * 30 + "\n")
         return all_results
 
-# =============================================================================
-# MAIN APPLICATION CLASS
-# =============================================================================
+
+
+
 
 class VibeRecommenderApp:
     """
@@ -208,7 +208,7 @@ class VibeRecommenderApp:
         self.movie_recommender = MovieRecommender()
         self.music_recommender = MusicRecommender(self.music_dataframe) if self.music_dataframe is not None else None
         
-        # [DS] Build the graph when the app starts
+        
         self._build_genre_graph()
 
     def _load_dataset(self):
@@ -250,9 +250,9 @@ class VibeRecommenderApp:
             print(f"[ERROR] Gemini API failed: {e}")
             return []
 
-    # =========================================================================
-    # [DS] DATA STRUCTURES (BCS304)
-    # =========================================================================
+    
+    
+    
     def _build_genre_graph(self):
         """
         [DS] This function builds a Graph (using a dictionary of lists).
@@ -274,7 +274,7 @@ class VibeRecommenderApp:
             "War": ["Drama", "Action", "Biography"],
             "Biography": ["Drama", "War", "Sport"],
         }
-        # Ensure all genres are in the graph for safe lookup
+        
         for g in GENRE_LIST:
             if g not in self.genre_graph:
                 self.genre_graph[g] = []
@@ -286,11 +286,11 @@ class VibeRecommenderApp:
         """
         related = set()
         for g in genres:
-            # Graph traversal: Find all neighbors of the node 'g'
+            
             neighbors = self.genre_graph.get(g, [])
             related.update(neighbors)
         
-        # Return up to 3 related genres that weren't in the original list
+        
         return [r for r in related if r not in genres][:3]
 
     def run(self):
@@ -300,7 +300,7 @@ class VibeRecommenderApp:
         print("="*75)
         
         if self.music_dataframe is None:
-            return # Exit if dataset failed to load
+            return 
 
         print("✅ Dataset loaded! Ready to find your vibe.")
         print("Hey GANG Type your vibe, or type 'manual' to pick genres manually.\n")
@@ -311,7 +311,7 @@ class VibeRecommenderApp:
                 print("👋 Goodbye! Keep your vibe rolling 🎬")
                 break
 
-            # Manual genre selection
+            
             if user_input.lower() == "manual":
                 print("Available genres:", ", ".join(GENRE_LIST))
                 entered = input("Enter one or more genres separated by commas: ").strip()
@@ -328,34 +328,34 @@ class VibeRecommenderApp:
             
             print(f"✅ Gemini suggests: {', '.join(genres)}")
 
-            # --- [DS] Graph Feature ---
+            
             related_genres = self._get_related_genres(genres)
             if related_genres:
                 print(f"💡 [DS-GRAPH] Based on your vibe, you might also like: {', '.join(related_genres)}")
-            # --- End DS Feature ---
+            
 
 
-            # Choice: Movies / Music / Both
+            
             while True:
                 choice = input("What would you like? (M=Movies, U=Music, B=Both): ").strip().lower()
                 if choice in ['m', 'u', 'b']:
                     break
                 print("❌ Invalid input. Try again.")
 
-            # --- [OS] Scheduler Integration ---
+            
             scheduler = SimpleFCFSScheduler()
             
-            # Add tasks to the scheduler's queue
+            
             if choice in ['m', 'b']:
                 scheduler.add_task(self.movie_recommender, genres)
             if choice in ['u', 'b'] and self.music_recommender:
                 scheduler.add_task(self.music_recommender, genres)
             
-            # Run the scheduler to process tasks and get results
+            
             results = scheduler.run_and_get_results()
-            # --- End OS Integration ---
+            
 
-            # ---- MOVIES ----
+            
             if results.get('movie'):
                 print("\n🎬 Your movie mix for:", ", ".join(genres))
                 print("═"*70)
@@ -367,7 +367,7 @@ class VibeRecommenderApp:
                     print("🚫 No movie results found.")
                 print("─"*70)
 
-            # ---- MUSIC ----
+            
             if results.get('music'):
                 print(f"\n🎧 Your music mix for: {', '.join(genres)}")
                 print("═"*70)
@@ -375,7 +375,7 @@ class VibeRecommenderApp:
                 print(tabulate(music, headers=["Track", "Artist", "Album"], tablefmt="fancy_grid"))
                 print("─"*70)
             
-            print("\n" + "="*75 + "\n") # Add separator for next round
+            print("\n" + "="*75 + "\n") 
 
 
 if __name__ == "__main__":
